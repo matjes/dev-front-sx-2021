@@ -16,7 +16,7 @@ var Page = {
 					entry.course.name,
 					entry.campus.city,
 					entry.full_price,
-					"<button type='button' class='btn btn-info'>Info</button>"
+					"<button type='button' class='btn btn-outline-info' onclick='Page.showModal(" + JSON.stringify(entry) + ")'>Info</button>"
 				]
 			}
 		});
@@ -28,12 +28,40 @@ var Page = {
 				{ title: "Nome do Curso" },
 				{ title: "Cidade" },
 				{ title: "Preço" },
-				{ title: "Detalhes" }
+				{ title: "..." }
 			]
 		});
 		
-	}
+	},
 	
+	showModal: (data) => {
+		console.log("showModal");
+		$("#infoModal").html(`
+<div class="modal fade" id="modalCenter" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLongTitle">${data.course.name}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="Page.hideModal()">
+          <span aria-hidden="true">x</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+		`);
+		$("#modalCenter").modal("show");
+	},
+
+	hideModal: () => {
+		$("#modalCenter").modal("hide");
+		$("#infoModal").innerHTML = "";
+	}
 };
 
 window.addEventListener("DOMContentLoaded", Page.initialize)
